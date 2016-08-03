@@ -16,8 +16,6 @@
 
 package com.intellij.appengine.server.run;
 
-import com.google.cloud.tools.appengine.api.devserver.DefaultRunConfiguration;
-import com.google.cloud.tools.appengine.api.devserver.RunConfiguration;
 import com.google.cloud.tools.intellij.appengine.cloud.AppEngineExecutor;
 import com.google.cloud.tools.intellij.appengine.cloud.AppEngineRunTask;
 
@@ -34,10 +32,7 @@ import com.intellij.javaee.run.localRun.ScriptsHelper;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**

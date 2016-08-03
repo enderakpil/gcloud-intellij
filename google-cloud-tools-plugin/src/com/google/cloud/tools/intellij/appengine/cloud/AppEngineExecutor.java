@@ -25,12 +25,12 @@ import com.intellij.openapi.vcs.impl.CancellableRunnable;
 /**
  * Runner of {@link AppEngineTask}'s.
  */
-public class AppEngineRunner implements CancellableRunnable {
+public class AppEngineExecutor implements CancellableRunnable {
 
   private Process process;
   private AppEngineTask task;
 
-  public AppEngineRunner(AppEngineTask task) {
+  public AppEngineExecutor(AppEngineTask task) {
     this.task = task;
   }
 
@@ -57,4 +57,7 @@ public class AppEngineRunner implements CancellableRunnable {
     this.process = process;
   }
 
+  public Process getProcess() {
+    return process;
+  }
 }

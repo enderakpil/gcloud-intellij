@@ -25,6 +25,7 @@ import com.google.cloud.tools.intellij.login.ui.GoogleLoginActionButton;
 import com.google.cloud.tools.intellij.login.ui.GoogleLoginCopyAndPasteDialog;
 import com.google.cloud.tools.intellij.login.ui.GoogleLoginIcons;
 import com.google.cloud.tools.intellij.login.util.AccountMessageBundle;
+import com.google.cloud.tools.intellij.stats.LoginTracking;
 import com.google.cloud.tools.intellij.stats.UsageTrackerProvider;
 import com.google.common.base.Strings;
 import com.google.gct.login.LoginContext;

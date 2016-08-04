@@ -1,11 +1,11 @@
 /*
- * Copyright 2000-2016 JetBrains s.r.o.
+ * Copyright (C) 2016 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-sourceSets.main.java.srcDirs = ['src']
-sourceSets.main.resources.srcDirs = ['resources']
-sourceSets.test.java.srcDirs = ['testSrc']
-sourceSets.test.resources.srcDirs = ['testData']
+package com.google.cloud.tools.intellij.stats;
 
-jar.archiveName = "google-app-engine-jps-plugin.jar"
+/**
+ * For usage tracker of the Google Login actions.
+ */
+public class LoginTracking {
 
-dependencies {
-    compile project(':google-cloud-tools-plugin:runtime')
-    testCompile group: 'com.jetbrains.intellij.idea', name:'jps-build-test', version: ideaVersion
+  private LoginTracking() {
+  }
+
+  public static final String LOGIN_START = "user.login.start";
+  public static final String LOGIN_CANCELLED = "user.login.cancelled";
+  public static final String LOGIN_COMPLETE = "user.login.complete";
 }

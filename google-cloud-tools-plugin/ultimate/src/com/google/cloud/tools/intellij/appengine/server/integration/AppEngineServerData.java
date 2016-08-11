@@ -18,6 +18,7 @@ package com.google.cloud.tools.intellij.appengine.server.integration;
 
 import com.google.cloud.tools.intellij.appengine.sdk.AppEngineSdk;
 import com.google.cloud.tools.intellij.appengine.sdk.AppEngineSdkManager;
+import com.google.cloud.tools.intellij.appengine.sdk.CloudSdkService;
 
 import com.intellij.javaee.appServerIntegrations.ApplicationServerPersistentData;
 import com.intellij.openapi.util.InvalidDataException;
@@ -32,8 +33,8 @@ import org.jetbrains.annotations.NotNull;
 public class AppEngineServerData implements ApplicationServerPersistentData {
   private String mySdkPath;
 
-  public AppEngineServerData(@NotNull String sdkPath) {
-    mySdkPath = sdkPath;
+  public AppEngineServerData() {
+    mySdkPath = CloudSdkService.getInstance().getCloudSdkHomePath();
   }
 
   @NotNull 

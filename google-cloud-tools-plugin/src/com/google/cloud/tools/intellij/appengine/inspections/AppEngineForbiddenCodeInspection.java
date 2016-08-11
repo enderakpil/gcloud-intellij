@@ -16,8 +16,7 @@
 
 package com.google.cloud.tools.intellij.appengine.inspections;
 
-import com.google.cloud.tools.intellij.appengine.facet.AppEngineFacet;
-import com.google.cloud.tools.intellij.appengine.sdk.AppEngineSdk;
+import com.google.cloud.tools.intellij.appengine.sdk.CloudSdkService;
 
 import com.intellij.codeHighlighting.HighlightDisplayLevel;
 import com.intellij.codeInspection.BaseJavaLocalInspectionTool;
@@ -25,8 +24,6 @@ import com.intellij.codeInspection.InspectionManager;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemHighlightType;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.JdkOrderEntry;
 import com.intellij.openapi.roots.OrderEntry;
@@ -97,7 +94,8 @@ public class AppEngineForbiddenCodeInspection extends BaseJavaLocalInspectionToo
           final PsiElement resolved = classReference.resolve();
           if (resolved instanceof PsiClass) {
             final String qualifiedName = ((PsiClass) resolved).getQualifiedName();
-            if (qualifiedName != null && appEngineSdk.isMethodInBlacklist(qualifiedName, "new")) {
+            if (qualifiedName != null && CloudSdkService.getInstance()
+                .isMethodInBlacklist(qualifiedName, "new")) {
               final String message =
                   "App Engine application should not create new instances of '" + qualifiedName
                       + "' class";
@@ -120,8 +118,8 @@ public class AppEngineForbiddenCodeInspection extends BaseJavaLocalInspectionToo
           if (psiClass != null) {
             final String qualifiedName = psiClass.getQualifiedName();
             final String methodName = method.getName();
-            if (qualifiedName != null && appEngineSdk
-                .isMethodInBlacklist(qualifiedName, methodName)) {
+            if (qualifiedName != null
+                && CloudSdkService.getInstance().isMethodInBlacklist(qualifiedName, methodName)) {
               final String message =
                   "AppEngine application should not call '" + StringUtil.getShortName(qualifiedName)
                       + ""
@@ -147,7 +145,9 @@ public class AppEngineForbiddenCodeInspection extends BaseJavaLocalInspectionToo
               for (OrderEntry entry : list) {
                 if (entry instanceof JdkOrderEntry) {
                   final String className = ClassUtil.getJVMClassName((PsiClass) resolved);
-                  if (className != null && !appEngineSdk.isClassInWhiteList(className)) {
+                  // TODO replace this
+                  if (className != null
+                      && !CloudSdkService.getInstance().isClassInWhiteList(className)) {
                     problems.add(manager.createProblemDescriptor(reference,
                         "Class '" + className + "' is not included in App Engine JRE White List",
                         isOnTheFly, LocalQuickFix.EMPTY_ARRAY,

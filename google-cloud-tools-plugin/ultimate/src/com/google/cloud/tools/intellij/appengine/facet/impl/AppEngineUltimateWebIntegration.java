@@ -46,7 +46,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.DependencyScope;
 import com.intellij.openapi.roots.ModifiableRootModel;
 import com.intellij.openapi.roots.libraries.Library;
-import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.packaging.artifacts.Artifact;
 import com.intellij.packaging.artifacts.ArtifactType;
@@ -57,7 +56,6 @@ import com.intellij.util.descriptors.ConfigFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -109,10 +107,8 @@ public class AppEngineUltimateWebIntegration extends AppEngineWebIntegration {
     }
   }
 
-  public void setupRunConfiguration(@NotNull AppEngineSdk sdk,
-      Artifact artifact,
-      @NotNull Project project) {
-    final ApplicationServer appServer = getOrCreateAppServer(sdk);
+  public void setupRunConfiguration(Artifact artifact, @NotNull Project project) {
+    final ApplicationServer appServer = getOrCreateAppServer();
     if (appServer != null) {
       AppEngineServerConfigurationType configurationType = AppEngineServerConfigurationType
           .getInstance();
@@ -132,9 +128,8 @@ public class AppEngineUltimateWebIntegration extends AppEngineWebIntegration {
   }
 
   @Override
-  public void addDevServerToModuleDependencies(@NotNull ModifiableRootModel rootModel,
-      @NotNull AppEngineSdk sdk) {
-    final ApplicationServer appServer = getOrCreateAppServer(sdk);
+  public void addDevServerToModuleDependencies(@NotNull ModifiableRootModel rootModel) {
+    final ApplicationServer appServer = getOrCreateAppServer();
     if (appServer != null) {
       rootModel.addLibraryEntry(appServer.getLibrary()).setScope(DependencyScope.PROVIDED);
     }
@@ -146,28 +141,21 @@ public class AppEngineUltimateWebIntegration extends AppEngineWebIntegration {
     WebArtifactUtil.getInstance().addLibrary(library, artifact, project);
   }
 
-  public void setupDevServer(@NotNull final AppEngineSdk sdk) {
-    getOrCreateAppServer(sdk);
+  public void setupDevServer() {
+    getOrCreateAppServer();
   }
 
-  private static ApplicationServer getOrCreateAppServer(AppEngineSdk sdk) {
-    if (!sdk.isValid()) {
-      return null;
-    }
+  private static ApplicationServer getOrCreateAppServer() {
     final ApplicationServersManager serversManager = ApplicationServersManager.getInstance();
     final AppEngineServerIntegration integration = AppEngineServerIntegration.getInstance();
 
     final List<ApplicationServer> servers = serversManager.getApplicationServers(integration);
-    File sdkHomeFile = new File(sdk.getSdkHomePath());
     for (ApplicationServer server : servers) {
-      final String path = ((AppEngineServerData) server.getPersistentData()).getSdkPath();
-      if (FileUtil.filesEqual(sdkHomeFile, new File(path))) {
-        return server;
-      }
+      return server;
     }
 
     return ApplicationServersManager.getInstance()
-        .createServer(integration, new AppEngineServerData(sdk.getSdkHomePath()));
+        .createServer(integration, new AppEngineServerData());
   }
 
   public List<? extends AppEngineSdk> getSdkForConfiguredDevServers() {

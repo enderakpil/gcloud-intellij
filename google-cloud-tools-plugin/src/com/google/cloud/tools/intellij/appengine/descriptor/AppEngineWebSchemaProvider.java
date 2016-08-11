@@ -17,6 +17,7 @@
 package com.google.cloud.tools.intellij.appengine.descriptor;
 
 import com.google.cloud.tools.intellij.appengine.facet.AppEngineFacet;
+import com.google.cloud.tools.intellij.appengine.sdk.CloudSdkService;
 import com.google.cloud.tools.intellij.appengine.util.AppEngineUtilLegacy;
 
 import com.intellij.openapi.module.Module;
@@ -73,9 +74,9 @@ public class AppEngineWebSchemaProvider extends XmlSchemaProvider {
       if (facet != null) {
         final File file;
         if (isApplicationXmlFile(baseFile)) {
-          file = facet.getSdk().getApplicationSchemeFile();
+          file = CloudSdkService.getInstance().getApplicationSchemeFile();
         } else {
-          file = facet.getSdk().getWebSchemeFile();
+          file = CloudSdkService.getInstance().getWebSchemeFile();
         }
         final VirtualFile virtualFile = LocalFileSystem.getInstance().findFileByIoFile(file);
         if (virtualFile != null) {

@@ -80,7 +80,7 @@ public class CloudSdkPanel {
 
   public boolean isModified() {
     return !Comparing.strEqual(getCloudSdkDirectory(),
-        CloudSdkService.getInstance().getCloudSdkHomePath());
+        CloudSdkService.getInstance().getCloudSdkHomePath().toString());
   }
 
   public void apply() throws ConfigurationException {
@@ -91,7 +91,7 @@ public class CloudSdkPanel {
   }
 
   public void reset() {
-    setCloudSdkDirectoryText(CloudSdkService.getInstance().getCloudSdkHomePath());
+    setCloudSdkDirectoryText(CloudSdkService.getInstance().getCloudSdkHomePath().toString());
   }
 
   public String getCloudSdkDirectory() {

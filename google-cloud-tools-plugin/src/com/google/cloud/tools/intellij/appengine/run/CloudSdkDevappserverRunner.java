@@ -14,21 +14,26 @@
  * limitations under the License.
  */
 
-package com.google.cloud.tools.intellij.appengine.sdk;
+package com.google.cloud.tools.intellij.appengine.run;
 
-import com.intellij.openapi.components.ServiceManager;
-import java.nio.file.Path;
+import com.intellij.execution.configurations.RunProfile;
+import com.intellij.execution.runners.DefaultProgramRunner;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
- * IntelliJ configured service for providing the path to the Cloud SDK.
+ * Created by joaomartins on 7/22/16.
  */
-public abstract class CloudSdkService {
+public class CloudSdkDevappserverRunner extends DefaultProgramRunner {
 
-  public static CloudSdkService getInstance() {
-    return ServiceManager.getService(CloudSdkService.class);
+  @NotNull
+  @Override
+  public String getRunnerId() {
+    return null;
   }
 
-  public abstract Path getCloudSdkHomePath();
-
-  public abstract void setCloudSdkHomePath(String path);
+  @Override
+  public boolean canRun(@NotNull String executorId, @NotNull RunProfile profile) {
+    return false;
+  }
 }

@@ -17,6 +17,8 @@
 package com.google.cloud.tools.intellij.appengine.sdk;
 
 import com.intellij.ide.util.PropertiesComponent;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * Default implementation of {@link CloudSdkService} backed by {@link PropertiesComponent} for
@@ -32,8 +34,8 @@ public class DefaultCloudSdkService extends CloudSdkService {
   }
 
   @Override
-  public String getCloudSdkHomePath() {
-    return propertiesComponent.getValue(CLOUD_SDK_PROPERTY_KEY);
+  public Path getCloudSdkHomePath() {
+    return Paths.get(propertiesComponent.getValue(CLOUD_SDK_PROPERTY_KEY));
   }
 
   @Override

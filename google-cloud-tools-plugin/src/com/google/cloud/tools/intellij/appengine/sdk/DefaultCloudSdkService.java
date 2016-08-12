@@ -35,7 +35,9 @@ public class DefaultCloudSdkService extends CloudSdkService {
 
   @Override
   public Path getCloudSdkHomePath() {
-    return Paths.get(propertiesComponent.getValue(CLOUD_SDK_PROPERTY_KEY));
+    return propertiesComponent.getValue(CLOUD_SDK_PROPERTY_KEY) != null
+        ? Paths.get(propertiesComponent.getValue(CLOUD_SDK_PROPERTY_KEY))
+        : null;
   }
 
   @Override

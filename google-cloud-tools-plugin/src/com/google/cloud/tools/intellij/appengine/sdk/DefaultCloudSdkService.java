@@ -17,6 +17,7 @@
 package com.google.cloud.tools.intellij.appengine.sdk;
 
 import com.intellij.ide.util.PropertiesComponent;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 

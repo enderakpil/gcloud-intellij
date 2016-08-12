@@ -17,6 +17,7 @@
 package com.google.cloud.tools.intellij.appengine.sdk;
 
 import com.intellij.openapi.components.ServiceManager;
+
 import java.nio.file.Path;
 
 /**
